@@ -75,8 +75,8 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.updateUser = (req, res, next) => {
-  const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about },
+  const { name, email } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, email },
     { new: true, runValidators: true, upsert: true })
     .then((user) => {
       if (!user) {
