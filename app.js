@@ -3,9 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const router = require('./routes/index.js');
+const { rateLimits } = require('./middlewares/rateLimit');
 const NotFoundError = require('./errors/not-found-error');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -35,10 +37,11 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 });
 
 app.use('*', cors(options));
+app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(rateLimits);
 app.use(router);
 
 router.use((req) => {
