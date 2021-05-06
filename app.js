@@ -5,8 +5,10 @@ require('dotenv').config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const helmet = require('helmet');
 const router = require('./routes/index.js');
 const NotFoundError = require('./errors/not-found-error');
+const rateLimits = require('./middlewares/rateLimits');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -35,12 +37,11 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 });
 
 app.use('*', cors(options));
-
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(rateLimits);
 app.use(router);
-
 router.use((req) => {
   throw new NotFoundError(`Ресурс по адресу ${req.path} не найден`);
 });
