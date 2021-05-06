@@ -19,15 +19,7 @@ router.post('/signin', celebrate({
   }),
 }), login);
 
-router.use('/users', celebrate({
-  headers: Joi.object().keys({
-    authorization: Joi.string().required(),
-  }).unknown(true),
-}), auth, userRouter);
-router.use('/movies', celebrate({
-  headers: Joi.object().keys({
-    authorization: Joi.string().required(),
-  }).unknown(true),
-}), auth, movieRouter);
+router.use('/users', auth, userRouter);
+router.use('/movies', auth, movieRouter);
 
 module.exports = router;
