@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 const Movie = require('../models/movies');
 const BadRequestError = require('../errors/bad-request-error');
 const NotFoundError = require('../errors/not-found-error');
@@ -18,8 +15,18 @@ module.exports.createMovie = (req, res, next) => {
     description, image, trailer, nameRU, nameEN, thumbnail, movieId,
   } = req.body;
   Movie.create({
-    // eslint-disable-next-line max-len
-    country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, owner: req.user._id, movieId,
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    nameRU,
+    nameEN,
+    thumbnail,
+    owner: req.user._id,
+    movieId,
   })
     .then((movie) => {
       res.send({ data: movie });
@@ -40,7 +47,7 @@ module.exports.deleteMovieById = (req, res, next) => {
     .then((movie) => {
       if (movie.owner.equals(req.user._id)) {
         Movie.findByIdAndRemove(req.params.movieId)
-          .then((movie) => {
+          .then(() => {
             res.send(movie);
           })
           .catch((err) => {

@@ -9,7 +9,7 @@ router.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
   }),
 }), createUser);
 router.post('/signin', celebrate({
@@ -18,16 +18,16 @@ router.post('/signin', celebrate({
     password: Joi.string().required().min(8),
   }),
 }), login);
-router.use(auth);
+
 router.use('/users', celebrate({
   headers: Joi.object().keys({
     authorization: Joi.string().required(),
   }).unknown(true),
-}), userRouter);
+}), auth, userRouter);
 router.use('/movies', celebrate({
   headers: Joi.object().keys({
     authorization: Joi.string().required(),
   }).unknown(true),
-}), movieRouter);
+}), auth, movieRouter);
 
 module.exports = router;

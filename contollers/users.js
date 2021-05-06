@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
-/* eslint no-unused-vars: "error" */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -21,10 +17,6 @@ const handleError = (err) => {
   if (err.name === 'ValidationError' || err.name === 'CastError') {
     throw new BadRequestError(err.message);
   }
-};
-
-const handleIdNotFound = () => {
-  throw new NotFoundError('Нет пользователя с таким id');
 };
 
 module.exports.getUserInfo = (req, res, next) => {
