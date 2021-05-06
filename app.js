@@ -3,7 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
-const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const router = require('./routes/index.js');
@@ -37,7 +36,6 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 });
 
 app.use('*', cors(options));
-app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
