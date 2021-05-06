@@ -6,7 +6,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const router = require('./routes/index.js');
-const { rateLimits } = require('./middlewares/rateLimit');
 const NotFoundError = require('./errors/not-found-error');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -34,7 +33,6 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useUnifiedTopology: true,
   autoIndex: true,
 });
-app.use(rateLimits);
 
 app.use('*', cors(options));
 
