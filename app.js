@@ -34,12 +34,13 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useUnifiedTopology: true,
   autoIndex: true,
 });
+app.use(rateLimits);
 
 app.use('*', cors(options));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(rateLimits);
+
 app.use(router);
 
 router.use((req) => {
