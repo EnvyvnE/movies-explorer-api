@@ -46,7 +46,7 @@ module.exports.deleteMovieById = (req, res, next) => {
     })
     .then((movie) => {
       if (movie.owner.equals(req.user._id)) {
-        Movie.findByIdAndRemove(req.params.movieId)
+        movie.remove()
           .then(() => {
             res.send(movie);
           })
