@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -6,6 +7,7 @@ const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const router = require('./routes/index.js');
 const NotFoundError = require('./errors/not-found-error');
+const { handleErrors } = require('./middlewares/handleErrors');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -47,15 +49,7 @@ router.use((req) => {
 app.use(errorLogger);
 
 app.use(errors());
-app.use((err, req, res) => {
-  const { statusCode = 500, message } = err;
-  res
-    .status(statusCode)
-    .send({
-      message: statusCode === 500
-        ? 'На сервере произошла ошибка'
-        : message,
-    });
-});
+
+app.use(handleErrors);
 
 app.listen(PORT);
