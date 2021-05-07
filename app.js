@@ -59,7 +59,4 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log('App start');
-});
+app.listen(PORT);
