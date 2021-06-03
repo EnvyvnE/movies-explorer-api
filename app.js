@@ -11,7 +11,7 @@ const { handleErrors } = require('./middlewares/handleErrors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const options = {
-  origin: ['http://localhost:3000', 'http://kozhevatov-diploma.nomoredomains.icu/', 'https://kozhevatov-diploma.nomoredomains.icu/'],
+  origin: ['*'],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
   optionsSuccessStatus: 204,
